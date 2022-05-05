@@ -1,5 +1,7 @@
 
 const jouer = document.getElementById("jouer")
+let choixAdver = document.getElementById("choixadvers")
+let resultat = document.getElementById("resultat")
 let table = [
     "pierre",
     "feuille",
@@ -12,23 +14,44 @@ jouer.addEventListener ('click' , event => {
     let resultChoixJoueur = choixJoueur(); // declarer la fonction qu'on a recupéré ligne 26
     let resultChoixOrdi = choixordi() // delarer la fonction qu'on recupère ligne 34
     let result = resultMatch(resultChoixJoueur,resultChoixOrdi) // declarer le resulat avec une fonction qui a un doble paramètre 
-    console.log(result);
+    afficheResulat(result,resultChoixOrdi) 
+    
 })
+
+function afficheResulat(result,resultChoixOrdi) { // la position du paramètre défini sa valeur
+    resultat.textContent = result;
+    choixAdver.textContent = resultChoixOrdi;
+    changeColor(result)
+}
+
+function changeColor(result) {
+    resultat.style.color = "black"
+    if (result==="perdu") {
+        resultat.style.color = "red"
+    }
+    else if (result==='gagné'){
+    resultat.style.color = 'green'
+    }
+}
+
+
 
 function choixJoueur() {
     const ChoixButton= document.getElementsByName("groupe1") // on recupère la valeur de checkbox avec son name et grace a la boucle for on return la valeur choix du joueur "checked" equivalent a value(button)
     let valeurChoixJoueur;
-    for(var i = 0; i < ChoixButton.length; i++){
+    // la boucle nous permet de parcourir les valeur des checkbox pour trouver
+    for( let i = 0; i < ChoixButton.length; i++){
+        // si le bouton est coché on défini la valeur du choix du joueur 
         if(ChoixButton[i].checked){
-            valeurChoixJoueur = ChoixButton[i].value
+            valeurChoixJoueur = ChoixButton[i].value   
         }
     }
-    return valeurChoixJoueur
-} // on récupère la valeur choix joueur 
+    return valeurChoixJoueur // on récupère la valeur choix joueur 
+} 
     
     
 function choixordi() {
-    let randomChoix = Math.floor(Math.random()*table.length) // fonction de js de base voir MDN
+    let randomChoix = Math.floor(Math.random()*table.length) // choix d'un nombre random parmis la liste des choix (table)
     
     let choixIa = table[randomChoix] // choix random ordi du tableau pierre feuille ciseaux en récuperant la valeur de son index
     return choixIa
